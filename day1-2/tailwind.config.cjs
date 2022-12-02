@@ -19,7 +19,7 @@ module.exports = {
         comforta: ["Comfortaa", "monospacel"],
       },
       backgroundImage: {
-        xmas: "url('./assets/wallpaper.png')",
+        xmas: "url('./assets/wallpaper.webp')",
       },
     },
   },
