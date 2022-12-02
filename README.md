@@ -1,5 +1,6 @@
 # Adviency
-=> Es un challenge de codigo donde durante 24 dias se itera la misma aplicacion agregando dificultad progresivelmente. 
+
+=> Es un challenge de codigo donde durante 24 dias se itera la misma aplicacion agregando dificultad progresivelmente. Se iran subiendo el avance de los dias en diferentes branches, mantendiendo la principal con la version actualizada.
 
 🔔 Recordá que la idea es empezar la app de 0 cada día, no editar la del día anterior, si no te dan los tiempos o te parece mucho, editá la anterior, mejor poco que nada! 🔔
 
