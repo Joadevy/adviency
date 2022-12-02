@@ -6,7 +6,7 @@ module.exports = {
         "primary-purple": "rgb(127, 79, 160)", // Light Mode Background
         "primary-green-bright": "rgb(55, 180, 74)", // Light Mode Text
         "primary-green-dark": "rgb(39, 48, 36)",
-        "primary-green": "rgb(39, 48, 36)",
+        "primary-green": "rgb(55, 67, 52)",
         "primary-red": "rgb(187, 32, 37)", // Light Mode Input
         "primary-brown": "rgb(155, 78, 55)",
         "primary-brown-dark": "rgb(155, 78, 55)",
