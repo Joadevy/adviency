@@ -1,7 +1,9 @@
 import React, { useState, FC, Dispatch } from "react";
 
+import { Regalo } from "./GiftContainer";
+
 type props = {
-  setRegalos: Dispatch<(_: string[]) => string[]>;
+  setRegalos: Dispatch<(_: Regalo[]) => Regalo[]>;
 };
 
 export const GiftInput: FC<props> = ({ setRegalos }) => {
@@ -18,7 +20,14 @@ export const GiftInput: FC<props> = ({ setRegalos }) => {
 
   const addGift = () => {
     if (!inputValue.trim()) return;
-    setRegalos((prev: string[]) => [...prev, inputValue]);
+
+    const newGift: Regalo = {
+      id: new Date().getTime(),
+      desc: inputValue.charAt(0).toUpperCase() + inputValue.slice(1),
+      cant: 1,
+    };
+
+    setRegalos((prev: Regalo[]) => [...prev, newGift]);
     clearInput();
   };
 
