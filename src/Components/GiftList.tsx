@@ -5,15 +5,11 @@ import removeIcon from "../assets/dustbin.png";
 import { Regalo } from "./GiftContainer";
 
 type props = {
-  setRegalos: Dispatch<Regalo[]>;
   regalos: Regalo[];
+  handleRemove: (_: number) => void;
 };
 
-export const GiftList: FC<props> = ({ regalos, setRegalos }) => {
-  const handleRemove = (id: number) => {
-    setRegalos(regalos.filter((regalo) => regalo.id !== id));
-  };
-
+export const GiftList: FC<props> = ({ regalos, handleRemove }) => {
   return (
     <ul className="font-comforta flex flex-col gap-3">
       {regalos.map((regalo, index) => (

@@ -1,12 +1,12 @@
-import React, { useState, FC, Dispatch } from "react";
+import React, { useState, FC } from "react";
 
 import { Regalo } from "./GiftContainer";
 
 type props = {
-  setRegalos: Dispatch<(_: Regalo[]) => Regalo[]>;
+  addRegalo: (_: Regalo) => void;
 };
 
-export const GiftInput: FC<props> = ({ setRegalos }) => {
+export const GiftInput: FC<props> = ({ addRegalo }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -27,7 +27,7 @@ export const GiftInput: FC<props> = ({ setRegalos }) => {
       cant: 1,
     };
 
-    setRegalos((prev: Regalo[]) => [...prev, newGift]);
+    addRegalo(newGift);
     clearInput();
   };
 
@@ -55,7 +55,7 @@ export const GiftInput: FC<props> = ({ setRegalos }) => {
       <input
         className="cursor-pointer text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors"
         type="submit"
-        value="Enviar"
+        value="Agregar"
       />
     </form>
   );
