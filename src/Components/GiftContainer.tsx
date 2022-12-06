@@ -41,16 +41,23 @@ export const GiftContainer = () => {
   };
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       <GiftInput addRegalo={addGift} />
       <GiftList regalos={regalos} handleRemove={removeGift} />
-      {regalos.length > 0 && (
+      {regalos.length > 0 ? (
         <button
           onClick={removeAll}
-          className="cursor-pointer w-9/12  sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
+          className="cursor-pointer mt-2 w-9/12  sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
         >
           Remover todos
         </button>
+      ) : (
+        <div className="self-center">
+          <p className="text-white font-comforta">
+            <span className="text-primary-gold">❖</span> Vamos, agrega algun
+            regalo, es <span className="text-primary-gold">Navidad!</span>
+          </p>
+        </div>
       )}
     </div>
   );
