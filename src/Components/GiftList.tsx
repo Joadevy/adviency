@@ -2,23 +2,23 @@ import React, { Dispatch, type FC } from "react";
 
 import removeIcon from "../assets/dustbin.png";
 
-import { Regalo } from "./GiftContainer";
+import { Gift } from "./GiftContainer";
 
 type props = {
-  regalos: Regalo[];
-  handleRemove: (_: number) => void;
+  gifts: Gift[];
+  handleRemove: (_: string) => void;
 };
 
-export const GiftList: FC<props> = ({ regalos, handleRemove }) => {
+export const GiftList: FC<props> = ({ gifts, handleRemove }) => {
   return (
     <ul className="font-comforta flex flex-col gap-3">
-      {regalos.map((regalo, index) => (
+      {gifts.map((gift, index) => (
         <li key={index} className="text-white font-normal text-lg">
           <div className="bg-primary-green rounded-sm py-2 px-1 flex items-center justify-between gap-2">
-            <p>
-              <span className="text-primary-gold">☀</span> {regalo.desc}
+            <p className="overflow-hidden">
+              <span className="text-primary-gold">☀</span> {gift.desc}
             </p>
-            <button className="w-5 h-5" onClick={() => handleRemove(regalo.id)}>
+            <button className="w-5 h-5" onClick={() => handleRemove(gift.desc)}>
               <img alt="remove element" className="w-full" src={removeIcon} />
             </button>
           </div>

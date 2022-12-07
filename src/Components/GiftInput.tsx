@@ -1,33 +1,34 @@
 import React, { useState, FC } from "react";
 
-import { Regalo } from "./GiftContainer";
+import { Gift } from "./GiftContainer";
 
 type props = {
-  addRegalo: (_: Regalo) => void;
+  addGift: (_: Gift) => void;
 };
 
-export const GiftInput: FC<props> = ({ addRegalo }) => {
+export const GiftInput: FC<props> = ({ addGift }) => {
   const [inputValue, setInputValue] = useState<string>("");
 
   const handleEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter") addGift();
+    if (e.key === "Enter") handleAdd();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    addGift();
+    handleAdd();
   };
 
-  const addGift = () => {
+  const handleAdd = () => {
     if (!inputValue.trim()) return;
 
-    const newGift: Regalo = {
+    const newGift: Gift = {
       id: new Date().getTime(),
-      desc: inputValue.charAt(0).toUpperCase() + inputValue.slice(1),
-      cant: 1,
+      desc:
+        inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase(),
+      amount: 1,
     };
 
-    addRegalo(newGift);
+    addGift(newGift);
     clearInput();
   };
 

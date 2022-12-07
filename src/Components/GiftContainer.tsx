@@ -3,48 +3,41 @@ import { useState } from "react";
 import { GiftInput } from "./GiftInput";
 import { GiftList } from "./GiftList";
 
-export type Regalo = {
+export type Gift = {
   id: number;
   desc: string;
-  cant: number;
+  amount: number;
+  unitPrice?: number;
 };
 
 export const GiftContainer = () => {
-  const [regalos, setRegalos] = useState<Regalo[]>([
-    {
-      id: 0,
-      desc: "Fernet",
-      cant: 1,
-    },
-    {
-      id: 1,
-      desc: "Notebook",
-      cant: 1,
-    },
-    {
-      id: 2,
-      desc: "Aire acondicionado",
-      cant: 1,
-    },
-  ]);
+  const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
 
   const removeAll = () => {
-    setRegalos([]);
+    setGifts(() => new Map());
   };
 
-  const addGift = (newGift: Regalo) => {
-    setRegalos((prev: Regalo[]) => [...prev, newGift]);
+  const addGift = (newGift: Gift) => {
+    const draft = new Map(gifts);
+    const key = newGift.desc.toLowerCase();
+
+    if (!draft.has(key)) draft.set(key, newGift);
+    else draft.get(key)!.amount++;
+
+    setGifts(draft);
   };
 
-  const removeGift = (id: number) => {
-    setRegalos(regalos.filter((regalo) => regalo.id !== id));
+  const removeGift = (key: string) => {
+    const draft = new Map(gifts);
+
+    if (draft.delete(key.toLowerCase())) setGifts(draft);
   };
 
   return (
     <div className="flex flex-col gap-4">
-      <GiftInput addRegalo={addGift} />
-      <GiftList regalos={regalos} handleRemove={removeGift} />
-      {regalos.length > 0 ? (
+      <GiftInput addGift={addGift} />
+      <GiftList gifts={[...gifts.values()]} handleRemove={removeGift} />
+      {gifts.size > 0 ? (
         <button
           onClick={removeAll}
           className="cursor-pointer mt-2 w-9/12  sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
@@ -54,7 +47,7 @@ export const GiftContainer = () => {
       ) : (
         <div className="self-center">
           <p className="text-white font-comforta">
-            <span className="text-primary-gold">❖</span> Vamos, agrega algun
+            <span className="text-primary-gold">❖</span> Vámos, agrega algún
             regalo, es <span className="text-primary-gold">Navidad!</span>
           </p>
         </div>
