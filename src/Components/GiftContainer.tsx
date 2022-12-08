@@ -22,7 +22,11 @@ export const GiftContainer = () => {
     const key = newGift.desc.toLowerCase();
 
     if (!draft.has(key)) draft.set(key, newGift);
-    else draft.get(key)!.amount++;
+    else {
+      const unitsToAdd = newGift.amount;
+
+      draft.get(key)!.amount += unitsToAdd;
+    }
 
     setGifts(draft);
   };
@@ -34,18 +38,18 @@ export const GiftContainer = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-8">
       <GiftInput addGift={addGift} />
       <GiftList gifts={[...gifts.values()]} handleRemove={removeGift} />
       {gifts.size > 0 ? (
         <button
+          className="cursor-pointer w-9/12 sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
           onClick={removeAll}
-          className="cursor-pointer mt-2 w-9/12  sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
         >
           Remover todos
         </button>
       ) : (
-        <div className="self-center">
+        <div className="self-center -mt-10">
           <p className="text-white font-comforta">
             <span className="text-primary-gold">❖</span> Vámos, agrega algún
             regalo, es <span className="text-primary-gold">Navidad!</span>

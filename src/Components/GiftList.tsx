@@ -1,4 +1,4 @@
-import React, { Dispatch, type FC } from "react";
+import React, { type FC } from "react";
 
 import removeIcon from "../assets/dustbin.png";
 
@@ -16,7 +16,8 @@ export const GiftList: FC<props> = ({ gifts, handleRemove }) => {
         <li key={index} className="text-white font-normal text-lg">
           <div className="bg-primary-green rounded-sm py-2 px-1 flex items-center justify-between gap-2">
             <p className="overflow-hidden">
-              <span className="text-primary-gold">☀</span> {gift.desc}
+              <span className="text-primary-gold">☀</span> {gift.desc} ×
+              {gift.amount}
             </p>
             <button className="w-5 h-5" onClick={() => handleRemove(gift.desc)}>
               <img alt="remove element" className="w-full" src={removeIcon} />
