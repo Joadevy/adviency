@@ -35,7 +35,7 @@ export const GiftContainer = () => {
 
   useEffect(() => {
     const storedGifts = JSON.parse(localStorage.getItem("gifts")!, reviver);
-    if (storedGifts.size > 0) {
+    if (storedGifts && storedGifts.size > 0) {
       setGifts(storedGifts);
     }
   }, []);
