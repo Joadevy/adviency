@@ -8,6 +8,7 @@ export type Gift = {
   desc: string;
   amount: number;
   unitPrice?: number;
+  urlImg?: string;
 };
 
 function replacer(key: string, value: any) {
