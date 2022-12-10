@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { GiftInput } from "./GiftInput";
 import { GiftList } from "./GiftList";
@@ -10,8 +10,39 @@ export type Gift = {
   unitPrice?: number;
 };
 
+function replacer(key: string, value: any) {
+  if (value instanceof Map) {
+    return {
+      dataType: "Map",
+      value: Array.from(value.entries()),
+    };
+  } else {
+    return value;
+  }
+}
+
+function reviver(key: string, value: any) {
+  if (typeof value === "object" && value !== null) {
+    if (value.dataType === "Map") {
+      return new Map(value.value);
+    }
+  }
+  return value;
+}
+
 export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
+
+  useEffect(() => {
+    const storedGifts = JSON.parse(localStorage.getItem("gifts")!, reviver);
+    if (storedGifts.size > 0) {
+      setGifts(storedGifts);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("gifts", JSON.stringify(gifts, replacer));
+  }, [gifts]);
 
   const removeAll = () => {
     setGifts(() => new Map());
