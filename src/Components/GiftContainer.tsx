@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 import { GiftInput } from "./GiftInput";
 import { GiftList } from "./GiftList";
+import closeBtn from "../assets/closeBtn.png";
 
 export type Gift = {
   id: number;
@@ -33,6 +34,7 @@ function reviver(key: string, value: any) {
 
 export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
+  const [isModalOpen, toggleModal] = useState(false);
 
   useEffect(() => {
     const storedGifts = JSON.parse(localStorage.getItem("gifts")!, reviver);
@@ -70,23 +72,48 @@ export const GiftContainer = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <GiftInput addGift={addGift} />
-      <GiftList gifts={[...gifts.values()]} handleRemove={removeGift} />
-      {gifts.size > 0 ? (
+    <div className="relative">
+      <div
+        className={"flex flex-col gap-8 " + (isModalOpen ? " opacity-10" : "")}
+      >
         <button
-          className="cursor-pointer w-9/12 sm:w-1/2 xl:w-1/3 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
-          onClick={removeAll}
+          className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
+          onClick={() => toggleModal(true)}
         >
-          Remover todos
+          Agregar regalos
         </button>
-      ) : (
-        <div className="self-center -mt-10">
-          <p className="text-white font-comforta">
-            <span className="text-primary-gold">❖</span> Vámos, agrega algún
-            regalo, es <span className="text-primary-gold">Navidad!</span>
-          </p>
-        </div>
+        <GiftList gifts={[...gifts.values()]} handleRemove={removeGift} />
+        {gifts.size > 0 ? (
+          <button
+            className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
+            onClick={removeAll}
+          >
+            Remover todos
+          </button>
+        ) : (
+          <div className="self-center -mt-10">
+            <p className="text-white font-comforta">
+              <span className="text-primary-gold">❖</span> Vámos, agrega algún
+              regalo, es <span className="text-primary-gold">Navidad!</span>
+            </p>
+          </div>
+        )}
+      </div>
+      {isModalOpen && (
+        <dialog
+          onClose={() => toggleModal(false)}
+          open={isModalOpen}
+          className="bg-primary-green-dark pt-12 border-2 border-primary-purple absolute w-80 xl:w-96 top-28 left-1/2 -translate-x-1/2 -translate-y-1/2"
+        >
+          <GiftInput addGift={addGift} />
+
+          <button
+            className="text-white absolute top-1 right-1 border-2 border-white hover:border-primary-purple h-9 w-9 rounded-full hover:bg-primary-green  transition-colors"
+            onClick={() => toggleModal(false)}
+          >
+            <img src={closeBtn} className="w-full h-full" alt="" />
+          </button>
+        </dialog>
       )}
     </div>
   );

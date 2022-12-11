@@ -32,8 +32,8 @@ export const GiftList: FC<props> = ({ gifts, handleRemove }) => {
                 />
               </div>
               <p className="overflow-hidden">
-                {gift.desc}{" "}
-                <span className="text-primary-gold">×{gift.amount}</span>
+                {gift.desc}
+                <span className="text-primary-gold ml-2">×{gift.amount}</span>
               </p>
             </div>
             <button className="w-5 h-5" onClick={() => handleRemove(gift.desc)}>
