@@ -22,19 +22,25 @@ export const GiftList: FC<props> = ({ gifts, handleRemove }) => {
             <div className="flex gap-2 items-center">
               <div className="w-14 h-14 border-2 border-primary-gold rounded-md">
                 <img
+                  alt=""
                   className="w-full h-full"
                   src={
                     isImage(gift.urlImg!)
                       ? gift.urlImg
                       : "https://static.vecteezy.com/system/resources/previews/010/263/593/original/round-gift-box-image-with-a-dark-red-color-wrap-paper-and-orange-color-ribbon-christmas-gift-on-a-transparent-background-gift-images-for-birthdays-anniversaries-or-christmas-events-design-free-png.png"
                   }
-                  alt=""
                 />
               </div>
-              <p className="overflow-hidden">
-                {gift.desc}
-                <span className="text-primary-gold ml-2">×{gift.amount}</span>
-              </p>
+              <div className="flex flex-col md:flex-row md:gap-2">
+                <p className="overflow-hidden">
+                  {gift.desc}
+                  <span className="text-primary-gold ml-2">×{gift.amount}</span>
+                </p>
+                <p className="overflow-hidden">
+                  ↪ para:
+                  <span className="text-primary-purple"> {gift.recipient}</span>
+                </p>
+              </div>
             </div>
             <button className="w-5 h-5" onClick={() => handleRemove(gift.desc)}>
               <img alt="remove element" className="w-full" src={removeIcon} />

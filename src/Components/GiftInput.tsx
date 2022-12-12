@@ -6,9 +6,15 @@ type props = {
   addGift: (_: Gift) => void;
 };
 
+const normalize = (str: string) => {
+  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+};
+
 export const GiftInput: FC<props> = ({ addGift }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [giftImg, setGiftImg] = useState<string>("");
+  const [recipient, setRecipient] = useState<string>("");
+
   const [amount, setAmount] = useState<number>(1);
 
   const handleEnter = (e: React.KeyboardEvent<HTMLElement>) => {
@@ -25,10 +31,10 @@ export const GiftInput: FC<props> = ({ addGift }) => {
 
     const newGift: Gift = {
       id: new Date().getTime(),
-      desc:
-        inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase(),
+      desc: normalize(inputValue),
       amount: amount,
       urlImg: giftImg,
+      recipient: normalize(recipient),
     };
 
     addGift(newGift);
@@ -38,6 +44,7 @@ export const GiftInput: FC<props> = ({ addGift }) => {
   const clearInputs = () => {
     setInputValue("");
     setGiftImg("");
+    setRecipient("");
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +59,7 @@ export const GiftInput: FC<props> = ({ addGift }) => {
       <div className="flex gap-3 md:gap-2">
         <input
           className="w-3/4 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
-          placeholder="Agrega tu regalo..."
+          placeholder="Nombre de tu regalo"
           type="text"
           value={inputValue}
           onChange={handleInput}
@@ -67,6 +74,14 @@ export const GiftInput: FC<props> = ({ addGift }) => {
           onChange={(e) => setAmount(Math.floor(+e.target.value))}
         />
       </div>
+      <input
+        required
+        className="w-3/4 self-center rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
+        placeholder="Destinatario"
+        type="text"
+        value={recipient}
+        onChange={(e) => setRecipient(e.target.value)}
+      />
       <input
         className="w-3/4 self-center rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
         placeholder="Imagen del regalo (opcional)"

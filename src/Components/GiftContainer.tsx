@@ -11,6 +11,7 @@ export type Gift = {
   amount: number;
   unitPrice?: number;
   urlImg?: string;
+  recipient: string;
 };
 
 function replacer(key: string, value: any) {
@@ -97,8 +98,8 @@ export const GiftContainer = () => {
           </button>
         ) : (
           <div>
-            <hr className="border-1 border-primary-purple -mt-5 mb-5" />
-            <p className="text-white text-center font-comforta text-lg my-5">
+            <hr className="border-1 border-primary-purple -mt-5 mb-7" />
+            <p className="text-white text-center font-comforta text-lg my-7">
               <span className="text-primary-gold">❖</span> Vámos, agrega algún
               regalo, es <span className="text-primary-gold">Navidad!</span>
             </p>
@@ -107,14 +108,14 @@ export const GiftContainer = () => {
       </div>
       {isModalOpen && (
         <dialog
-          className="bg-primary-green-dark pt-12 border-2 border-primary-purple absolute w-80 xl:w-96 top-20 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          className="bg-primary-green-dark pt-5 border-2 border-primary-purple absolute w-80 xl:w-96 top-20 left-1/2 -translate-x-1/2 -translate-y-1/2"
           open={isModalOpen}
           onClose={() => toggleModal(false)}
         >
           <GiftInput addGift={addGift} />
 
           <button
-            className="text-white absolute top-1 right-1 border-2 border-white hover:border-primary-purple h-9 w-9 rounded-full hover:bg-primary-green  transition-colors"
+            className="text-white absolute bottom-2 left-2 border-2 border-white hover:border-primary-purple h-8 w-8 rounded-full hover:bg-primary-green  transition-colors"
             onClick={() => toggleModal(false)}
           >
             <img alt="" className="w-full h-full" src={closeBtn} />
