@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 
+import closeBtn from "../assets/closeBtn.png";
+
 import { GiftInput } from "./GiftInput";
 import { GiftList } from "./GiftList";
-import closeBtn from "../assets/closeBtn.png";
 
 export type Gift = {
   id: number;
@@ -29,6 +30,7 @@ function reviver(key: string, value: any) {
       return new Map(value.value);
     }
   }
+
   return value;
 }
 
@@ -38,6 +40,7 @@ export const GiftContainer = () => {
 
   useEffect(() => {
     const storedGifts = JSON.parse(localStorage.getItem("gifts")!, reviver);
+
     if (storedGifts && storedGifts.size > 0) {
       setGifts(storedGifts);
     }
@@ -74,7 +77,9 @@ export const GiftContainer = () => {
   return (
     <div className="relative">
       <div
-        className={"flex flex-col gap-8 " + (isModalOpen ? " opacity-10" : "")}
+        className={
+          "relative flex flex-col gap-10 " + (isModalOpen ? " opacity-10" : "")
+        }
       >
         <button
           className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
@@ -91,8 +96,9 @@ export const GiftContainer = () => {
             Remover todos
           </button>
         ) : (
-          <div className="self-center -mt-10">
-            <p className="text-white font-comforta">
+          <div>
+            <hr className="border-1 border-primary-purple -mt-5 mb-5" />
+            <p className="text-white text-center font-comforta text-lg my-5">
               <span className="text-primary-gold">❖</span> Vámos, agrega algún
               regalo, es <span className="text-primary-gold">Navidad!</span>
             </p>
@@ -101,9 +107,9 @@ export const GiftContainer = () => {
       </div>
       {isModalOpen && (
         <dialog
-          onClose={() => toggleModal(false)}
+          className="bg-primary-green-dark pt-12 border-2 border-primary-purple absolute w-80 xl:w-96 top-20 left-1/2 -translate-x-1/2 -translate-y-1/2"
           open={isModalOpen}
-          className="bg-primary-green-dark pt-12 border-2 border-primary-purple absolute w-80 xl:w-96 top-28 left-1/2 -translate-x-1/2 -translate-y-1/2"
+          onClose={() => toggleModal(false)}
         >
           <GiftInput addGift={addGift} />
 
@@ -111,7 +117,7 @@ export const GiftContainer = () => {
             className="text-white absolute top-1 right-1 border-2 border-white hover:border-primary-purple h-9 w-9 rounded-full hover:bg-primary-green  transition-colors"
             onClick={() => toggleModal(false)}
           >
-            <img src={closeBtn} className="w-full h-full" alt="" />
+            <img alt="" className="w-full h-full" src={closeBtn} />
           </button>
         </dialog>
       )}
