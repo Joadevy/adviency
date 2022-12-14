@@ -3,26 +3,40 @@ import React, { useState, FC } from "react";
 import { Gift } from "./GiftContainer";
 
 type props = {
-  addGift: (_: Gift) => void;
+  addGift?: (_: Gift) => void;
+  editGift?: (_: Gift) => void;
+  toEdit?: Gift;
+  closeModal?: (_: boolean) => void;
 };
 
 const normalize = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 };
 
-export const GiftInput: FC<props> = ({ addGift }) => {
-  const [inputValue, setInputValue] = useState<string>("");
-  const [giftImg, setGiftImg] = useState<string>("");
-  const [recipient, setRecipient] = useState<string>("");
+export const GiftInput: FC<props> = ({
+  addGift,
+  editGift,
+  toEdit,
+  closeModal,
+}) => {
+  const [inputValue, setInputValue] = useState<string>(toEdit?.desc ?? "");
+  const [giftImg, setGiftImg] = useState<string>(toEdit?.urlImg ?? "");
+  const [recipient, setRecipient] = useState<string>(toEdit?.recipient ?? "");
 
-  const [amount, setAmount] = useState<number>(1);
+  const [amount, setAmount] = useState<number>(toEdit?.amount ?? 1);
+  let editing = false;
+
+  if (toEdit) editing = true;
 
   const handleEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key === "Enter" && amount > 0) handleAdd();
+    if (e.key !== "Enter" || amount <= 0 || !recipient.trim()) return;
+    if (editing) return handleEdit();
+    handleAdd();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (editing) return handleEdit();
     handleAdd();
   };
 
@@ -37,8 +51,23 @@ export const GiftInput: FC<props> = ({ addGift }) => {
       recipient: normalize(recipient),
     };
 
-    addGift(newGift);
+    addGift!(newGift);
     clearInputs();
+  };
+
+  const handleEdit = () => {
+    if (!inputValue.trim()) return;
+
+    const editedGift: Gift = {
+      id: toEdit!.id,
+      desc: normalize(inputValue),
+      amount: amount,
+      urlImg: giftImg,
+      recipient: normalize(recipient),
+    };
+
+    editGift!(editedGift);
+    closeModal!(false);
   };
 
   const clearInputs = () => {
@@ -92,7 +121,7 @@ export const GiftInput: FC<props> = ({ addGift }) => {
       <input
         className="cursor-pointer text-white w-9/12 sm:w-1/2 xl:w-1/3 self-center border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors"
         type="submit"
-        value="Agregar"
+        value={editing ? "Editar" : "Agregar"}
       />
     </form>
   );

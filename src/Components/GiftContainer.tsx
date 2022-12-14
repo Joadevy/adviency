@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 
-import closeBtn from "../assets/closeBtn.png";
-
-import { GiftInput } from "./GiftInput";
 import { GiftList } from "./GiftList";
+import { GiftModal } from "./GiftModal";
+import { GiftInput } from "./GiftInput";
 
 export type Gift = {
   id: number;
@@ -57,9 +56,14 @@ export const GiftContainer = () => {
 
   const addGift = (newGift: Gift) => {
     const draft = new Map(gifts);
-    const key = newGift.desc.toLowerCase();
+    let key = newGift.id.toString();
+    let exist = false;
 
-    if (!draft.has(key)) draft.set(key, newGift);
+    draft.forEach((e) =>
+      e.desc === newGift.desc ? ((exist = true), (key = e.id.toString())) : null
+    );
+
+    if (!exist) draft.set(key, newGift);
     else {
       const unitsToAdd = newGift.amount;
 
@@ -75,6 +79,14 @@ export const GiftContainer = () => {
     if (draft.delete(key.toLowerCase())) setGifts(draft);
   };
 
+  const editGift = (editedGift: Gift) => {
+    const draft = new Map(gifts);
+    const key = editedGift.id.toString();
+
+    if (draft.has(key)) draft.set(key, editedGift);
+    setGifts(draft);
+  };
+
   return (
     <div className="relative">
       <div
@@ -88,7 +100,11 @@ export const GiftContainer = () => {
         >
           Agregar regalos
         </button>
-        <GiftList gifts={[...gifts.values()]} handleRemove={removeGift} />
+        <GiftList
+          editGift={editGift}
+          gifts={[...gifts.values()]}
+          handleRemove={removeGift}
+        />
         {gifts.size > 0 ? (
           <button
             className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
@@ -107,20 +123,9 @@ export const GiftContainer = () => {
         )}
       </div>
       {isModalOpen && (
-        <dialog
-          className="bg-primary-green-dark pt-5 border-2 border-primary-purple absolute w-80 xl:w-96 top-20 left-1/2 -translate-x-1/2 -translate-y-1/2"
-          open={isModalOpen}
-          onClose={() => toggleModal(false)}
-        >
+        <GiftModal isModalOpen={isModalOpen} toggleModal={toggleModal}>
           <GiftInput addGift={addGift} />
-
-          <button
-            className="text-white absolute bottom-2 left-2 border-2 border-white hover:border-primary-purple h-8 w-8 rounded-full hover:bg-primary-green  transition-colors"
-            onClick={() => toggleModal(false)}
-          >
-            <img alt="" className="w-full h-full" src={closeBtn} />
-          </button>
-        </dialog>
+        </GiftModal>
       )}
     </div>
   );
