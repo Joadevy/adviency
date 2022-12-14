@@ -89,6 +89,7 @@ export const GiftInput: FC<props> = ({
         <input
           className="w-3/4 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
           placeholder="Nombre de tu regalo"
+          tabIndex={0}
           type="text"
           value={inputValue}
           onChange={handleInput}
