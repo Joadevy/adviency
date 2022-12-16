@@ -30,7 +30,7 @@ export const GiftList: FC<props> = ({ gifts, handleRemove, editGift }) => {
     <div>
       <ul
         className={
-          "font-comforta flex flex-col gap-3" +
+          "font-comforta flex flex-col gap-3 -mt-5" +
           (isModalOpen ? " opacity-10" : "")
         }
       >
