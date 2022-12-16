@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import api from "../utils/api";
+
 import { GiftList } from "./GiftList";
 import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
@@ -13,42 +15,43 @@ export type Gift = {
   recipient: string;
 };
 
-function replacer(key: string, value: any) {
-  if (value instanceof Map) {
-    return {
-      dataType: "Map",
-      value: Array.from(value.entries()),
-    };
-  } else {
-    return value;
-  }
-}
-
-function reviver(key: string, value: any) {
-  if (typeof value === "object" && value !== null) {
-    if (value.dataType === "Map") {
-      return new Map(value.value);
-    }
-  }
-
-  return value;
-}
+type giftAPI = {
+  status: string;
+  data: Map<string, Gift>;
+};
 
 export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
   const [isModalOpen, toggleModal] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const storedGifts = JSON.parse(localStorage.getItem("gifts")!, reviver);
-
-    if (storedGifts && storedGifts.size > 0) {
-      setGifts(storedGifts);
-    }
+    getGifts();
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("gifts", JSON.stringify(gifts, replacer));
-  }, [gifts]);
+    saveGifts();
+  }, [gifts]); //eslint-disable-line
+
+  const getGifts = async () => {
+    try {
+      const req: giftAPI = await api.gifts();
+      const gifts = req.data;
+
+      if (gifts.size > 0) setGifts(gifts);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const saveGifts = async () => {
+    try {
+      await api.save(gifts);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const removeAll = () => {
     setGifts(() => new Map());
@@ -87,11 +90,24 @@ export const GiftContainer = () => {
     setGifts(draft);
   };
 
+  if (loading)
+    return (
+      <div>
+        <h2 className="text-xl text-white font-nerko">
+          Loading <span className="text-md">loading</span>{" "}
+          <span className="text-sm">loading</span>{" "}
+          <span className="text-xs">loading</span>
+          ...
+        </h2>
+      </div>
+    );
+
   return (
     <div className="relative">
       <div
         className={
-          "relative flex flex-col gap-10 " + (isModalOpen ? " opacity-10" : "")
+          "relative flex flex-col gap-12 lg:gap-14 " +
+          (isModalOpen ? "opacity-10" : "")
         }
       >
         <button
@@ -107,7 +123,7 @@ export const GiftContainer = () => {
         />
         {gifts.size > 0 ? (
           <button
-            className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
+            className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors -mt-5 "
             onClick={removeAll}
           >
             Remover todos
