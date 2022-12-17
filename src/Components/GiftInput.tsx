@@ -41,20 +41,18 @@ export const GiftInput: FC<props> = ({
   const [inputValue, setInputValue] = useState<string>(toEdit?.desc ?? "");
   const [giftImg, setGiftImg] = useState<string>(toEdit?.urlImg ?? "");
   const [recipient, setRecipient] = useState<string>(toEdit?.recipient ?? "");
-
   const [amount, setAmount] = useState<number>(toEdit?.amount ?? 1);
+  const [unitPrice, setUnitPrice] = useState<number | string>(
+    toEdit?.unitPrice ?? ""
+  );
+
   let editing = false;
 
   if (toEdit) editing = true;
 
-  const handleEnter = (e: React.KeyboardEvent<HTMLElement>) => {
-    if (e.key !== "Enter" || amount <= 0 || !recipient.trim()) return;
-    if (editing) return handleEdit();
-    handleAdd();
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (editing) return handleEdit();
     handleAdd();
   };
@@ -68,6 +66,7 @@ export const GiftInput: FC<props> = ({
       amount: amount,
       urlImg: giftImg,
       recipient: normalize(recipient),
+      unitPrice: +unitPrice,
     };
 
     addGift!(newGift);
@@ -83,6 +82,7 @@ export const GiftInput: FC<props> = ({
       amount: amount,
       urlImg: giftImg,
       recipient: normalize(recipient),
+      unitPrice: +unitPrice,
     };
 
     editGift!(editedGift);
@@ -93,6 +93,8 @@ export const GiftInput: FC<props> = ({
     setInputValue("");
     setGiftImg("");
     setRecipient("");
+    setUnitPrice(0);
+    setAmount(1);
   };
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -118,29 +120,40 @@ export const GiftInput: FC<props> = ({
     >
       <div className="flex gap-3 md:gap-2">
         <input
-          className="w-3/4 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
+          className="w-9/12 lg:7/12 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
           placeholder="Nombre de tu regalo"
           tabIndex={0}
           type="text"
           value={inputValue}
           onChange={handleInput}
-          onKeyDown={handleEnter}
         />
         <button
-          className="cursor-pointer text-white text-sm w-9/12 sm:w-1/2 xl:w-1/3 border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors"
+          className="cursor-pointer text-white text-xs sm:text-sm w-4/12 sm:w-1/2 xl:w-1/3 border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors"
+          type="button"
           onClick={handleRandomGift}
         >
           Sorprendeme!
         </button>
       </div>
-      <input
-        className="w-1/6 text-center rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
-        defaultValue={amount}
-        min="1"
-        name="quantity"
-        type="number"
-        onChange={(e) => setAmount(Math.floor(+e.target.value))}
-      />
+      <div className="flex gap-2">
+        <input
+          required
+          className="w-7/12 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
+          min="0"
+          placeholder="Precio unitario $ARS"
+          type="number"
+          value={unitPrice}
+          onChange={(e) => setUnitPrice(Math.floor(+e.target.value))}
+        />
+        <input
+          className="w-1/6 text-center rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"
+          defaultValue={amount}
+          min="1"
+          name="quantity"
+          type="number"
+          onChange={(e) => setAmount(Math.floor(+e.target.value))}
+        />
+      </div>{" "}
       <input
         required
         className="w-3/4 rounded-md bg-white p-2 shadow outline-none focus:outline-primary-purple"

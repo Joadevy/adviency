@@ -10,7 +10,7 @@ export type Gift = {
   id: number;
   desc: string;
   amount: number;
-  unitPrice?: number;
+  unitPrice: number;
   urlImg?: string;
   recipient: string;
 };
@@ -94,9 +94,9 @@ export const GiftContainer = () => {
     return (
       <div>
         <h2 className="text-xl text-white font-nerko">
-          Loading <span className="text-md">loading</span>{" "}
-          <span className="text-sm">loading</span>{" "}
-          <span className="text-xs">loading</span>
+          Cargando <span className="text-md">cargando</span>{" "}
+          <span className="text-sm">cargando</span>{" "}
+          <span className="text-xs">cargando</span>
           ...
         </h2>
       </div>

@@ -49,20 +49,27 @@ export const GiftList: FC<props> = ({ gifts, handleRemove, editGift }) => {
                     }
                   />
                 </div>
-                <div className="flex flex-col md:flex-row md:gap-2">
-                  <p className="overflow-hidden">
-                    {gift.desc}
-                    <span className="text-primary-gold ml-2">
-                      ×{gift.amount}
-                    </span>
-                  </p>
-                  <p className="overflow-hidden">
-                    ↪ para:
-                    <span className="text-primary-purple">
-                      {" "}
-                      {gift.recipient}
-                    </span>
-                  </p>
+                <div>
+                  <div className="flex flex-col md:flex-row md:gap-2">
+                    <p className="overflow-hidden">
+                      {gift.desc}
+                      <span className="text-primary-gold ml-2">
+                        ×{gift.amount}
+                      </span>
+                    </p>
+                    <p className="overflow-hidden text-sm md:text-lg">
+                      ↪ para:
+                      <span className="text-primary-purple">
+                        {" "}
+                        {gift.recipient}
+                      </span>
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs md:text-sm font-light text-gray-300">
+                      Precio: ${gift.unitPrice * gift.amount ?? 0}
+                    </p>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-3">
