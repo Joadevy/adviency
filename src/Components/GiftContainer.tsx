@@ -71,7 +71,9 @@ export const GiftContainer = () => {
     let exist = false;
 
     draft.forEach((e) =>
-      e.desc === newGift.desc ? ((exist = true), (key = e.id.toString())) : null
+      e.desc === newGift.desc && e.recipient === newGift.recipient
+        ? ((exist = true), (key = e.id.toString()))
+        : null
     );
 
     if (!exist) draft.set(key, newGift);
@@ -125,6 +127,7 @@ export const GiftContainer = () => {
           Agregar regalos
         </button>
         <GiftList
+          addGift={addGift}
           editGift={editGift}
           gifts={[...gifts.values()]}
           handleRemove={removeGift}

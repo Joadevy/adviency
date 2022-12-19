@@ -6,6 +6,7 @@ type props = {
   addGift?: (_: Gift) => void;
   editGift?: (_: Gift) => void;
   toEdit?: Gift;
+  toDuplicate?: Gift;
   closeModal?: (_: boolean) => void;
 };
 
@@ -36,26 +37,38 @@ export const GiftInput: FC<props> = ({
   addGift,
   editGift,
   toEdit,
+  toDuplicate,
   closeModal,
 }) => {
-  const [inputValue, setInputValue] = useState<string>(toEdit?.desc ?? "");
-  const [giftImg, setGiftImg] = useState<string>(toEdit?.urlImg ?? "");
+  const [inputValue, setInputValue] = useState<string>(
+    toEdit?.desc ?? toDuplicate?.desc ?? ""
+  );
+  const [giftImg, setGiftImg] = useState<string>(
+    toEdit?.urlImg ?? toDuplicate?.urlImg ?? ""
+  );
   const [recipient, setRecipient] = useState<string>(toEdit?.recipient ?? "");
-  const [amount, setAmount] = useState<number>(toEdit?.amount ?? 1);
+  const [amount, setAmount] = useState<number>(
+    toEdit?.amount ?? toDuplicate?.amount ?? 1
+  );
   const [unitPrice, setUnitPrice] = useState<number | string>(
-    toEdit?.unitPrice ?? ""
+    toEdit?.unitPrice ?? toDuplicate?.unitPrice ?? ""
   );
 
   let editing = false;
+  let duplicating = false;
 
   if (toEdit) editing = true;
+  if (toDuplicate) duplicating = true;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (editing) return handleEdit();
+    // if (duplicating) return handleDuplicate();
     handleAdd();
   };
+
+  // const handleDuplicate = () => {};
 
   const handleAdd = () => {
     if (!inputValue.trim()) return;
