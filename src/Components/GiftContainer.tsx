@@ -20,6 +20,14 @@ type giftAPI = {
   data: Map<string, Gift>;
 };
 
+const totalForGifts = (arrGifts: Gift[]) => {
+  return arrGifts.reduce((total, gift) => {
+    total += gift.unitPrice * gift.amount;
+
+    return total;
+  }, 0);
+};
+
 export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
   const [isModalOpen, toggleModal] = useState(false);
@@ -122,12 +130,21 @@ export const GiftContainer = () => {
           handleRemove={removeGift}
         />
         {gifts.size > 0 ? (
-          <button
-            className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors -mt-5 "
-            onClick={removeAll}
-          >
-            Remover todos
-          </button>
+          <div className="flex flex-col items-center justify-center gap-7">
+            <p className="text-white">
+              Total:{" "}
+              {totalForGifts(Array.from(gifts.values())).toLocaleString(
+                "es-AR",
+                { style: "currency", currency: "ARS" }
+              )}
+            </p>
+            <button
+              className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors -mt-5 "
+              onClick={removeAll}
+            >
+              Remover todos
+            </button>
+          </div>
         ) : (
           <div>
             <hr className="border-1 border-primary-purple -mt-5 mb-7" />

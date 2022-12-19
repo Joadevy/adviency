@@ -67,7 +67,11 @@ export const GiftList: FC<props> = ({ gifts, handleRemove, editGift }) => {
                   </div>
                   <div>
                     <p className="text-xs md:text-sm font-light text-gray-300">
-                      Precio: ${gift.unitPrice * gift.amount ?? 0}
+                      Precio:{" "}
+                      {(gift.unitPrice * gift.amount ?? 0).toLocaleString(
+                        "es-AR",
+                        { style: "currency", currency: "ARS" }
+                      )}
                     </p>
                   </div>
                 </div>
