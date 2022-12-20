@@ -15,7 +15,7 @@ type props = {
   addGift: (_: Gift) => void;
 };
 
-function isImage(url: string) {
+export function isImage(url: string) {
   return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
 }
 
@@ -44,7 +44,7 @@ export const GiftList: FC<props> = ({
       <ul
         className={
           "font-comforta flex flex-col gap-3 -mt-5" +
-          (isEditModalOpen ? " opacity-10" : "")
+          (isEditModalOpen || isDuplicateModalOpen ? " opacity-10" : "")
         }
       >
         {gifts.map((gift, index) => (

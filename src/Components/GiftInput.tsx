@@ -55,20 +55,15 @@ export const GiftInput: FC<props> = ({
   );
 
   let editing = false;
-  let duplicating = false;
 
   if (toEdit) editing = true;
-  if (toDuplicate) duplicating = true;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (editing) return handleEdit();
-    // if (duplicating) return handleDuplicate();
     handleAdd();
   };
-
-  // const handleDuplicate = () => {};
 
   const handleAdd = () => {
     if (!inputValue.trim()) return;

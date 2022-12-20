@@ -15,7 +15,7 @@ export const GiftModal: FC<props> = ({
 }) => {
   return (
     <dialog
-      className="bg-primary-green-dark pt-5 border-2 border-primary-purple absolute w-80 xl:w-96 top-20 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      className="bg-primary-green-dark pt-5 border-2 border-primary-purple absolute w-80 xl:w-96 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
       open={isModalOpen}
       onClose={() => toggleModal(false)}
     >

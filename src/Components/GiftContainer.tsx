@@ -5,6 +5,7 @@ import api from "../utils/api";
 import { GiftList } from "./GiftList";
 import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
+import Previsualize from "./Previsualize";
 
 export type Gift = {
   id: number;
@@ -30,7 +31,9 @@ const totalForGifts = (arrGifts: Gift[]) => {
 
 export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
-  const [isModalOpen, toggleModal] = useState(false);
+  const [isAddModalOpen, toggleAddModal] = useState(false);
+  const [isPrevModalOpen, togglePrevModal] = useState(false);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -117,12 +120,17 @@ export const GiftContainer = () => {
       <div
         className={
           "relative flex flex-col gap-12 lg:gap-14 " +
-          (isModalOpen ? "opacity-10" : "")
+          (isAddModalOpen || isPrevModalOpen ? "opacity-10" : "")
         }
       >
+        <header>
+          <h1 className="text-white text-5xl font-nerko text-center underline">
+            Regalos
+          </h1>
+        </header>
         <button
           className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
-          onClick={() => toggleModal(true)}
+          onClick={() => toggleAddModal(true)}
         >
           Agregar regalos
         </button>
@@ -147,6 +155,12 @@ export const GiftContainer = () => {
             >
               Remover todos
             </button>
+            <button
+              className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2  py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors -mt-5"
+              onClick={() => togglePrevModal(true)}
+            >
+              Previsualizar
+            </button>
           </div>
         ) : (
           <div>
@@ -158,9 +172,14 @@ export const GiftContainer = () => {
           </div>
         )}
       </div>
-      {isModalOpen && (
-        <GiftModal isModalOpen={isModalOpen} toggleModal={toggleModal}>
+      {isAddModalOpen && (
+        <GiftModal isModalOpen={isAddModalOpen} toggleModal={toggleAddModal}>
           <GiftInput addGift={addGift} />
+        </GiftModal>
+      )}
+      {isPrevModalOpen && (
+        <GiftModal isModalOpen={isPrevModalOpen} toggleModal={togglePrevModal}>
+          <Previsualize gifts={[...gifts.values()]} />
         </GiftModal>
       )}
     </div>
