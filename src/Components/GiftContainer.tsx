@@ -6,6 +6,10 @@ import { GiftList } from "./GiftList";
 import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
 import Previsualize from "./Previsualize";
+import XmasSong from "../assets/XmasCarol.mp3";
+import ReactAudioPlayer from "react-audio-player";
+import volumenOn from "../assets/volumen.png";
+import volumenOff from "../assets/novolume.png";
 
 export type Gift = {
   id: number;
@@ -33,6 +37,7 @@ export const GiftContainer = () => {
   const [gifts, setGifts] = useState<Map<string, Gift>>(() => new Map());
   const [isAddModalOpen, toggleAddModal] = useState(false);
   const [isPrevModalOpen, togglePrevModal] = useState(false);
+  const [isMuted, toggleMuted] = useState(true);
 
   const [loading, setLoading] = useState(true);
 
@@ -123,10 +128,25 @@ export const GiftContainer = () => {
           (isAddModalOpen || isPrevModalOpen ? "opacity-10" : "")
         }
       >
-        <header>
+        <header className="flex items-center justify-center">
           <h1 className="text-white text-5xl font-nerko text-center underline">
             Regalos
           </h1>
+          <button
+            className="w-10 h-10 absolute top-0 right-0 border-2 p-2 rounded-full"
+            onClick={() => toggleMuted(!isMuted)}
+          >
+            <img
+              src={isMuted ? volumenOff : volumenOn}
+              alt="Mute or unmute the background christmas song!"
+            />
+            <ReactAudioPlayer
+              autoPlay={true}
+              src={XmasSong}
+              muted={isMuted}
+              loop
+            />
+          </button>
         </header>
         <button
           className="cursor-pointer w-9/12 sm:w-1/2 xl:w-5/12 self-center text-white border-2 py-1 px-2 rounded-md hover:border-primary-purple hover:bg-primary-green transition-colors "
