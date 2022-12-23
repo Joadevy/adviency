@@ -24,11 +24,11 @@ export const PrevItem: FC<props> = ({ gift }) => {
       </div>
       <div>
         <div className="flex flex-col">
-          <p className="overflow-hidden text-md">
+          <p className="overflow-hidden text-md text-white ">
             {gift.desc}
             <span className="text-primary-gold ml-2">×{gift.amount}</span>
           </p>
-          <p className="overflow-hidden ">
+          <p className="overflow-hidden text-white ">
             ↪ para:
             <span className="text-primary-purple "> {gift.recipient}</span>
           </p>
