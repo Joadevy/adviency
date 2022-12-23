@@ -7,12 +7,18 @@ import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
 import Previsualize from "./Previsualize";
 import XmasSong from "../assets/XmasCarol.mp3";
+<<<<<<< HEAD
 import volumenOn from "../assets/volumen.png";
 import volumenOff from "../assets/novolume.png";
 import AudioPlayer from "react-audio-player"; // @ts-ignore
 const ReactAudioPlayer: any = AudioPlayer.default // @ts-ignore
   ? AudioPlayer.default // @ts-ignore
   : AudioPlayer;
+=======
+import ReactAudioPlayer from "react-audio-player";
+import volumenOn from "../assets/volumen.png";
+import volumenOff from "../assets/novolume.png";
+>>>>>>> 7494eff168b03efd436584f003f8dd819f5c656d
 
 export type Gift = {
   id: number;
@@ -147,7 +153,6 @@ export const GiftContainer = () => {
               autoPlay={true}
               src={XmasSong}
               muted={isMuted}
-              controls
               loop
             />
           </button>
