@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
+import AudioPlayer from "react-audio-player"; // @ts-ignore
 
 import api from "../utils/api";
+import XmasSong from "../assets/XmasCarol.mp3";
+import volumenOn from "../assets/volumen.png";
+import volumenOff from "../assets/novolume.png";
 
 import { GiftList } from "./GiftList";
 import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
 import Previsualize from "./Previsualize";
-import XmasSong from "../assets/XmasCarol.mp3";
-import volumenOn from "../assets/volumen.png";
-import volumenOff from "../assets/novolume.png";
-import AudioPlayer from "react-audio-player"; // @ts-ignore
 const ReactAudioPlayer: any = AudioPlayer.default // @ts-ignore
   ? AudioPlayer.default // @ts-ignore
   : AudioPlayer;
@@ -136,18 +136,18 @@ export const GiftContainer = () => {
             Regalos
           </h1>
           <button
-            className="w-10 h-10 absolute top-0 right-0 border-2 p-2 rounded-full"
+            className="w-10 h-10 absolute top-0 right-0 border-2 p-2 rounded-full hover:opacity-70 transition-opacity"
             onClick={() => toggleMuted(!isMuted)}
           >
             <img
-              src={isMuted ? volumenOff : volumenOn}
               alt="Mute or unmute the background christmas song!"
+              src={isMuted ? volumenOff : volumenOn}
             />
             <ReactAudioPlayer
-              autoPlay={true}
-              src={XmasSong}
-              muted={isMuted}
               loop
+              autoPlay={true}
+              muted={isMuted}
+              src={XmasSong}
             />
           </button>
         </header>
