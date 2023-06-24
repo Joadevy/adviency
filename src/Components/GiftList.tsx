@@ -63,7 +63,7 @@ export const GiftList: FC<props> = ({
                   />
                 </div>
                 <div>
-                  <div className="flex flex-col sm:flex-row sm:gap-2">
+                  <div className="flex flex-col mb-1">
                     <p className="overflow-hidden text-md">
                       {gift.desc}
                       <span className="text-primary-gold ml-2">
@@ -71,7 +71,7 @@ export const GiftList: FC<props> = ({
                       </span>
                     </p>
                     <p className="overflow-hidden ">
-                      ↪ para:
+                      <span className="hidden md:inline">↪</span> para:
                       <span className="text-primary-purple ">
                         {" "}
                         {gift.recipient}
@@ -89,9 +89,9 @@ export const GiftList: FC<props> = ({
                   </div>
                 </div>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-3 flex-col xs:flex-row">
                 <button
-                  className="w-5 h-5"
+                  className="w-5 h-5 hover:opacity-75 transition-opacity order-3 xs:order-1"
                   onClick={() => handleDuplicate(gift)}
                 >
                   <img
@@ -100,11 +100,14 @@ export const GiftList: FC<props> = ({
                     src={duplicateIcon}
                   />
                 </button>
-                <button className="w-5 h-5" onClick={() => handleEdit(gift)}>
+                <button
+                  className="w-5 h-5 hover:opacity-75 transition-opacity order-2 xs:order-2"
+                  onClick={() => handleEdit(gift)}
+                >
                   <img alt="edit element" className="w-full" src={editIcon} />
                 </button>
                 <button
-                  className="w-5 h-5"
+                  className="w-5 h-5 hover:opacity-75 transition-opacity order-1 xs:order-3"
                   onClick={() => handleRemove(gift.id.toString())}
                 >
                   <img

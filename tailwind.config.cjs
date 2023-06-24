@@ -21,6 +21,9 @@ module.exports = {
       backgroundImage: {
         xmas: "url('./assets/wallpaper.webp')",
       },
+      screens: {
+        xs: "350px",
+      },
     },
   },
   plugins: [
