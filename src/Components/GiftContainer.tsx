@@ -10,8 +10,10 @@ import { GiftList } from "./GiftList";
 import { GiftModal } from "./GiftModal";
 import { GiftInput } from "./GiftInput";
 import Previsualize from "./Previsualize";
-const ReactAudioPlayer: any = AudioPlayer.default // @ts-ignore
-  ? AudioPlayer.default // @ts-ignore
+// @ts-ignore
+const ReactAudioPlayer: any = AudioPlayer.default
+  ? // @ts-ignore
+    AudioPlayer.default
   : AudioPlayer;
 
 export type Gift = {
